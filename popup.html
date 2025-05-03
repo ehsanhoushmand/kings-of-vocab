@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kings Of Vocab</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 350px;
+      max-height: 500px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      padding: 10px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 20px;
+      color: #333;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    .word-list {
+      max-height: 350px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 5px;
+    }
+    .word-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    .word-item:last-child {
+      border-bottom: none;
+    }
+    .word-text {
+      flex-grow: 1;
+      padding-right: 10px;
+    }
+    .word-title {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 3px;
+    }
+    .word-phonetic {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+    .word-pos {
+      color: #8bc34a;
+      font-style: italic;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+    .word-definition {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.3;
+    }
+    .delete-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 2px 6px;
+      cursor: pointer;
+      font-size: 12px;
+      align-self: flex-start;
+    }
+    .delete-btn:hover {
+      background: #ff5252;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    button {
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #3b78e7;
+    }
+    .empty-message {
+      text-align: center;
+      color: #666;
+      padding: 20px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kings Of Vocab</h1>
+  
+  <div class="word-list" id="wordList">
+    <div class="empty-message">Double-click on words in web pages to save them here.</div>
+  </div>
+  
+  <div class="controls">
+    <button id="exportBtn">Export Words</button>
+    <button id="clearBtn">Clear All</button>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
