@@ -5,9 +5,9 @@ chrome.runtime.onInstalled.addListener(function() {
   console.log('Kings Of Vocab extension installed');
   
   // Initialize storage if needed
-  chrome.storage.sync.get('savedWords', function(data) {
+  chrome.storage.local.get('savedWords', function(data) {
     if (!data.savedWords) {
-      chrome.storage.sync.set({ savedWords: {} });
+      chrome.storage.local.set({ savedWords: {} });
     }
   });
 });

@@ -3,7 +3,7 @@ let savedWords = {};
 
 // Load saved words from storage
 function loadSavedWords() {
-  chrome.storage.sync.get('savedWords', function(data) {
+  chrome.storage.local.get('savedWords', function(data) {
     savedWords = data.savedWords || {};
     highlightSavedWords();
   });
@@ -21,7 +21,7 @@ function saveWord(word) {
       fetchDefinition(word);
       
       // Save to storage
-      chrome.storage.sync.set({ savedWords: savedWords }, function() {
+      chrome.storage.local.set({ savedWords: savedWords }, function() {
         console.log('Word saved:', word);
         highlightSavedWords();
       });
@@ -34,7 +34,7 @@ function removeWord(word) {
   word = word.toLowerCase();
   if (savedWords[word]) {
     delete savedWords[word];
-    chrome.storage.sync.set({ savedWords: savedWords }, function() {
+    chrome.storage.local.set({ savedWords: savedWords }, function() {
       console.log('Word removed:', word);
       highlightSavedWords();
     });
@@ -59,7 +59,7 @@ function fetchDefinition(word) {
         };
         
         // Update storage with definition
-        chrome.storage.sync.set({ savedWords: savedWords });
+        chrome.storage.local.set({ savedWords: savedWords });
       }
     })
     .catch(error => console.log('Error fetching definition:', error));
@@ -372,3 +372,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // Initialize
 document.addEventListener('dblclick', handleDoubleClick);
 loadSavedWords();
+document.addEventListener('keydown', function(event) {
+  if (event.metaKey && event.key.toLowerCase() === 'k') {
+    event.preventDefault();
+    loadSavedWords();
+  }
+});

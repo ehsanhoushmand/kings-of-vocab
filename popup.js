@@ -2,10 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const wordList = document.getElementById('wordList');
   const exportBtn = document.getElementById('exportBtn');
   const clearBtn = document.getElementById('clearBtn');
+  const updateHighlightsBtn = document.getElementById('updateHighlightsBtn');
   
   // Load and display saved words
   function loadWords() {
-    chrome.storage.sync.get('savedWords', function(data) {
+    chrome.storage.local.get('savedWords', function(data) {
       const savedWords = data.savedWords || {};
       wordList.innerHTML = '';
       
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteBtn.textContent = 'X';
         deleteBtn.addEventListener('click', function() {
           delete savedWords[word];
-          chrome.storage.sync.set({ savedWords: savedWords }, function() {
+          chrome.storage.local.set({ savedWords: savedWords }, function() {
             loadWords();
             // Notify content scripts to update highlights
             chrome.tabs.query({}, function(tabs) {
@@ -81,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Export words to a file
   exportBtn.addEventListener('click', function() {
-    chrome.storage.sync.get('savedWords', function(data) {
+    chrome.storage.local.get('savedWords', function(data) {
       const savedWords = data.savedWords || {};
       let exportContent = "Kings Of Vocab - Saved Words\n\n";
       
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Clear all saved words
   clearBtn.addEventListener('click', function() {
     if (confirm('Are you sure you want to delete all saved words?')) {
-      chrome.storage.sync.set({ savedWords: {} }, function() {
+      chrome.storage.local.set({ savedWords: {} }, function() {
         loadWords();
         // Notify content scripts to update highlights
         chrome.tabs.query({}, function(tabs) {
@@ -151,6 +152,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     }
+  });
+
+  // Update highlights button click handler
+  updateHighlightsBtn.addEventListener('click', function() {
+    chrome.tabs.query({}, function(tabs) {
+      tabs.forEach(tab => {
+        chrome.tabs.sendMessage(tab.id, { action: "updateHighlights" }).catch(() => {});
+      });
+    });
   });
   
   // Load words when popup opens
