@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      URLObjectURL(url);
+      URL.revokeObjectURL(url);
     });
   });
   
@@ -151,22 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     }
-  });
-  
-  // Add refresh highlights button
-  const refreshBtn = document.createElement('button');
-  refreshBtn.textContent = 'Refresh Highlights';
-  refreshBtn.className = 'refresh-btn';
-  document.querySelector('.controls').appendChild(refreshBtn);
-  
-  refreshBtn.addEventListener('click', function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      if (tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: "refreshHighlights" }).catch(() => {
-          console.log("Could not send refresh message to tab");
-        });
-      }
-    });
   });
   
   // Load words when popup opens
