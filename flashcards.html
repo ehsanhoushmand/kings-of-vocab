@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kings Of Vocab - Flashcards</title>
+  <link rel="stylesheet" href="flashcards.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Kings Of Vocab <span>Flashcards</span></h1>
+      <div class="controls">
+        <button id="backToPopup">Back</button>
+        <div class="filter-container">
+          <select id="sortOrder">
+            <option value="random">Random</option>
+            <option value="alphabetical">Alphabetical</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+        <button id="fullscreenBtn" title="Toggle fullscreen">
+          <span class="fullscreen-icon">⛶</span>
+        </button>
+      </div>
+    </header>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <span id="currentIndex">0</span>/<span id="totalCards">0</span>
+      </div>
+      <div class="stat-item">
+        <span id="knownCount">0</span> known
+      </div>
+      <div class="stat-item">
+        <span id="reviewCount">0</span> to review
+      </div>
+    </div>
+    
+    <div class="flashcard-container">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <div class="word-text"></div>
+            <div class="word-phonetic"></div>
+            <p class="instruction">Click to reveal meaning</p>
+          </div>
+          <div class="flashcard-back">
+            <div class="part-of-speech"></div>
+            <div class="definition-container">
+              <div class="definition"></div>
+            </div>
+            <div class="example"></div>
+            <div class="synonyms"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="prevBtn" class="action-btn">Previous</button>
+      <button id="flipBtn" class="action-btn primary">Flip Card</button>
+      <button id="nextBtn" class="action-btn">Next</button>
+    </div>
+    
+    <div class="feedback-buttons">
+      <button id="reviewBtn" class="feedback-btn review">Need Review</button>
+      <button id="knownBtn" class="feedback-btn known">I Know This</button>
+    </div>
+    
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+  
+  <script src="flashcards.js"></script>
+</body>
+</html>

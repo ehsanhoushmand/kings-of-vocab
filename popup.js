@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const exportBtn = document.getElementById('exportBtn');
   const clearBtn = document.getElementById('clearBtn');
   const updateHighlightsBtn = document.getElementById('updateHighlightsBtn');
+  const flashcardsBtn = document.getElementById('flashcardsBtn');
+  
+  flashcardsBtn.addEventListener('click', function() {
+    chrome.tabs.create({ url: 'flashcards.html' });
+  });
   
   // Load and display saved words
   function loadWords() {

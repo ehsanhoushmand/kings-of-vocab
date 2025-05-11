@@ -124,3 +124,12 @@
 .refresh-btn:hover {
   background-color: #7cb342;
 }
+
+.flashcards-btn {
+  background-color: #fbbc05;
+  color: white;
+}
+
+.flashcards-btn:hover {
+  background-color: #f9a825;
+}

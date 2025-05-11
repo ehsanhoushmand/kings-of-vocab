@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kings Of Vocab",
-  "version": "1.3.10",
+  "version": "1.4.2",
   "description": "Save words by double-clicking, highlight them across pages, and see their definitions.",
   "permissions": ["storage", "activeTab", "scripting", "unlimitedStorage"],
   "host_permissions": ["<all_urls>"],
@@ -27,5 +27,11 @@
   ],
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["flashcards.html", "flashcards.css", "flashcards.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
