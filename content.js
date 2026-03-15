@@ -3,6 +3,11 @@ let savedWords = {};
 
 // Load saved words from storage
 function loadSavedWords() {
+  // If the extension context is gone (e.g. after reload), skip storage calls
+  if (!chrome.runtime || !chrome.runtime.id) {
+    return;
+  }
+
   chrome.storage.local.get('savedWords', function(data) {
     savedWords = data.savedWords || {};
     highlightSavedWords();
@@ -21,6 +26,10 @@ function saveWord(word) {
       fetchDefinition(word);
       
       // Save to storage
+      if (!chrome.runtime || !chrome.runtime.id) {
+        return;
+      }
+
       chrome.storage.local.set({ savedWords: savedWords }, function() {
         console.log('Word saved:', word);
         highlightSavedWords();
@@ -34,6 +43,9 @@ function removeWord(word) {
   word = word.toLowerCase();
   if (savedWords[word]) {
     delete savedWords[word];
+    if (!chrome.runtime || !chrome.runtime.id) {
+      return;
+    }
     chrome.storage.local.set({ savedWords: savedWords }, function() {
       console.log('Word removed:', word);
       highlightSavedWords();
@@ -53,12 +65,15 @@ function fetchDefinition(word) {
         
         // Store the complete data
         savedWords[word] = {
-          timestamp: savedWords[word].timestamp,
+          timestamp: savedWords[word] ? savedWords[word].timestamp : Date.now(),
           phonetic: phonetic,
           meanings: meanings
         };
         
         // Update storage with definition
+        if (!chrome.runtime || !chrome.runtime.id) {
+          return;
+        }
         chrome.storage.local.set({ savedWords: savedWords });
       }
     })
@@ -185,6 +200,42 @@ function highlightSavedWords() {
 function showTooltip(event) {
   const word = event.target.dataset.word.toLowerCase();
   const wordData = savedWords[word];
+
+  // If we don't have data for this word (e.g. storage not loaded yet or entry removed),
+  // show a simple tooltip and avoid accessing properties on undefined.
+  if (!wordData) {
+    // Remove any existing tooltips first
+    document.querySelectorAll('.word-learner-tooltip').forEach(el => {
+      if (el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+    });
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'word-learner-tooltip';
+
+    const content = document.createElement('div');
+    content.className = 'tooltip-content';
+
+    const wordTitle = document.createElement('div');
+    wordTitle.className = 'tooltip-word';
+    wordTitle.textContent = word;
+    content.appendChild(wordTitle);
+
+    const noDefinition = document.createElement('div');
+    noDefinition.className = 'tooltip-no-definition';
+    noDefinition.textContent = 'Definition not available';
+    content.appendChild(noDefinition);
+
+    tooltip.appendChild(content);
+
+    const rect = event.target.getBoundingClientRect();
+    tooltip.style.left = `${rect.left + window.scrollX}px`;
+    tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+
+    document.body.appendChild(tooltip);
+    return;
+  }
   
   // Remove any existing tooltips first
   document.querySelectorAll('.word-learner-tooltip').forEach(el => {
@@ -352,25 +403,17 @@ function hideTooltip(event) {
   }, 300); // 300ms delay gives time to move mouse to tooltip
 }
 
-// Double-click handler to save words
-function handleDoubleClick(event) {
-  const selection = window.getSelection();
-  const selectedText = selection.toString();
-  
-  if (selectedText) {
-    saveWord(selectedText);
-  }
-}
-
 // Listen for messages from popup or background
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === "updateHighlights") {
     loadSavedWords();
+  } else if (request.action === "saveWordFromContextMenu" && request.word) {
+    // Save the word sent from the background context menu handler
+    saveWord(request.word);
   }
 });
 
 // Initialize
-document.addEventListener('dblclick', handleDoubleClick);
 loadSavedWords();
 document.addEventListener('keydown', function(event) {
   if (event.metaKey && event.key.toLowerCase() === 'k') {

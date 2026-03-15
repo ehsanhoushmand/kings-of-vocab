@@ -2,15 +2,15 @@
 
 ![Kings Of Vocab Logo](images/logo.png)
 
-**Version:** 1.3.10
+**Version:** 1.4.4
 
 ## Description
 
-Kings Of Vocab is a Chrome extension designed to help you save and learn new vocabulary effortlessly. Simply double-click any word on a webpage to save it. The extension highlights your saved words across all pages and provides detailed definitions and phonetics on hover.
+Kings Of Vocab is a Chrome extension designed to help you save and learn new vocabulary effortlessly. Select any word on a webpage, right-click it, and choose **"Add to Kings Of Vocab"** to save it. The extension highlights your saved words across all pages and provides detailed definitions and phonetics on hover.
 
 ## Features
 
-- **Save Words by Double-Clicking:** Quickly save any word by double-clicking it on any webpage.
+- **Save Words via Right-Click:** Quickly save any word by selecting it, right-clicking, and choosing **"Add to Kings Of Vocab"** on any webpage.
 - **Highlight Saved Words:** All saved words are highlighted across all visited pages for easy recognition.
 - **Detailed Definitions:** Hover over highlighted words to see phonetics, meanings, synonyms, antonyms, and example sentences.
 - **Remove Words Easily:** Click on a highlighted word to remove it from your saved list.
@@ -29,7 +29,7 @@ Kings Of Vocab is a Chrome extension designed to help you save and learn new voc
 
 ## Usage
 
-- **Saving Words:** Double-click any word on a webpage to save it. The word will be highlighted immediately.
+- **Saving Words:** Select any word on a webpage, right-click it, and choose **"Add to Kings Of Vocab"**. The word will be highlighted immediately (or after a short moment when the page refreshes highlights).
 - **Viewing Definitions:** Hover over any highlighted word to see its detailed definition, phonetic transcription, synonyms, antonyms, and example sentences.
 - **Removing Words:** Click on a highlighted word to remove it from your saved list.
 - **Managing Words:** Click the extension icon to open the popup. Here you can:

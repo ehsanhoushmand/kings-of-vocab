@@ -10,6 +10,32 @@ chrome.runtime.onInstalled.addListener(function() {
       chrome.storage.local.set({ savedWords: {} });
     }
   });
+
+  // Create context menu for adding words
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: 'kings-of-vocab-add-word',
+      title: 'Add to Kings Of Vocab',
+      contexts: ['selection']
+    });
+  });
+});
+
+// Handle context menu clicks
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'kings-of-vocab-add-word' && tab && tab.id != null) {
+    const selectedText = (info.selectionText || '').trim();
+    if (!selectedText) return;
+
+    // Ask the content script in this tab to save the selected word
+    chrome.tabs.sendMessage(tab.id, {
+      action: 'saveWordFromContextMenu',
+      word: selectedText
+    }).catch(err => {
+      // Content script may not be available on some pages
+      console.log('Could not send saveWordFromContextMenu message:', err);
+    });
+  }
 });
 
 // Listen for tab updates to refresh highlights

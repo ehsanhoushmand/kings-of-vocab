@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Kings Of Vocab",
-  "version": "1.4.2",
-  "description": "Save words by double-clicking, highlight them across pages, and see their definitions.",
-  "permissions": ["storage", "activeTab", "scripting", "unlimitedStorage"],
+  "version": "1.4.4",
+  "description": "Save words via right-click, highlight them across pages, and see their definitions.",
+  "permissions": ["storage", "activeTab", "scripting", "unlimitedStorage", "contextMenus"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html",

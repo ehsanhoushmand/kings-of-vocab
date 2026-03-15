@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
       wordList.innerHTML = '';
       
       if (Object.keys(savedWords).length === 0) {
-        wordList.innerHTML = '<div class="empty-message">Double-click on words in web pages to save them here.</div>';
+        wordList.innerHTML = '<div class="empty-message">Right-click selected words in web pages and choose "Add to Kings Of Vocab" to save them here.</div>';
         return;
       }
       
